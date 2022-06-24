@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 
-import { CheckCircle, Lock } from 'phosphor-react';
+import { CheckCircle, Diamond, Lock } from 'phosphor-react';
 import { format, isPast } from 'date-fns';
 import classNames from 'classnames';
 
@@ -62,7 +62,12 @@ export function Lesson(props: LessonProps) {
           </span>
         </header>
 
-        <strong className={classNames('mt-5 block',{
+        { isActiveLesson 
+          ? <Diamond size={16} color="#00875F" weight="fill" className="relative right-[1.5rem]"/> 
+          : ""}
+
+
+        <strong className={classNames('block',{
           'text-white': isActiveLesson,
           'text-gray-200': !isActiveLesson
           })}>
