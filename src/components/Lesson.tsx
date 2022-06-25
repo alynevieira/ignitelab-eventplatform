@@ -63,10 +63,10 @@ export function Lesson(props: LessonProps) {
         </header>
 
         { isActiveLesson 
-          ? <Diamond size={16} color="#00875F" weight="fill" className="relative right-[1.5rem]"/> 
+          ? <Diamond size={16} color="#00875F" weight="fill" className="absolute right-[19.6rem]"/> 
           : ""}
 
-        <strong className={classNames('block',{
+        <strong className={classNames('mt-4 block',{
           'text-white': isActiveLesson,
           'text-gray-200': !isActiveLesson
           })}>
