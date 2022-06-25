@@ -66,7 +66,6 @@ export function Lesson(props: LessonProps) {
           ? <Diamond size={16} color="#00875F" weight="fill" className="relative right-[1.5rem]"/> 
           : ""}
 
-
         <strong className={classNames('block',{
           'text-white': isActiveLesson,
           'text-gray-200': !isActiveLesson
