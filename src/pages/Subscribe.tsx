@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, FormEvent } from "react";
 
-import { useMutation } from "@apollo/client";
+import imageCode from '../assets/images/code-mockup.png';
 
 import { Logo } from "../components/Logo";
 import { useCreateSubscriberMutation } from "../graphql/generated";
@@ -70,7 +70,7 @@ export function Subscribe() {
         </div>
       </div>
 
-      <img src="/src/assets/images/code-mockup.png" alt="Code" />
+      <img src={imageCode} alt="Code" />
     </div>
   );
 }
