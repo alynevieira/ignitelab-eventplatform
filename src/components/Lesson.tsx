@@ -1,10 +1,11 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { CheckCircle, Diamond, Lock } from 'phosphor-react';
 import { format, isPast } from 'date-fns';
 import classNames from 'classnames';
 
 import ptBR from 'date-fns/locale/pt-BR';
+import { useEffect } from 'react';
 
 interface LessonProps {
   title: string;
@@ -14,12 +15,21 @@ interface LessonProps {
 }
 
 export function Lesson(props: LessonProps) {
-  const { slug } = useParams<{ slug: string }>();
+  let { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
   
   const isLessonAvailable = isPast(props.availableAt);
   const availableDateFormatted = format(props.availableAt, "EEE' • 'd' de 'MMMM' • 'k'h'mm", {
     locale: ptBR,
   });
+  
+  useEffect(() => {
+    if(!slug && isLessonAvailable) {
+      const slugSaved = localStorage.getItem('slug')!;
+      navigate(`/event/lesson/${slugSaved}`);
+      slug = slugSaved;
+    }
+  }, []);
   
   const routeToLesson = isLessonAvailable ? `/event/lesson/${props.slug}` : '';
   const isActiveLesson = slug === props.slug;

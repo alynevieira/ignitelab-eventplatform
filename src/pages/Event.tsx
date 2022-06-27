@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 import { Video } from "../components/Video";
 
 export function Event() {
-  const { slug } = useParams<{ slug: string }>();
+  let { slug } = useParams<{ slug: string }>();
 
   return (
     <div className="flex flex-col min-h-screen">

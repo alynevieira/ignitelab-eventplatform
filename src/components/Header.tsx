@@ -26,7 +26,7 @@ export function Header() {
         )}
       </div>
 
-      <div className={classNames("z-[100] xl:hidden fixed top-[75px] right-0 w-full h-full bg-gray-700 transition-all duration-500 ease-in-out", {
+      <div className={classNames("z-[100] xl:hidden fixed top-[75px] pb-[75px] overflow-scroll right-0 w-full h-full bg-gray-700 transition-all duration-500 ease-in-out", {
         "translate-x-[60px]": toggleSidebar,
         "translate-x-full": !toggleSidebar
       })}>

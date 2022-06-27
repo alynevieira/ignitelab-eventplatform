@@ -4,9 +4,11 @@ import { useState, FormEvent } from "react";
 import imageCode from '../assets/images/code-mockup.png';
 
 import { Logo } from "../components/Logo";
-import { useCreateSubscriberMutation } from "../graphql/generated";
+import { useCreateSubscriberMutation, useGetLessonsQuery } from "../graphql/generated";
 
 export function Subscribe() {
+  const { data } = useGetLessonsQuery();
+  const slug = data && data.lessons && data.lessons.length ? data.lessons[0].slug : '';
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
@@ -24,7 +26,7 @@ export function Subscribe() {
       }
     });
 
-    navigate('/event');
+    navigate(`/event/lesson/${slug}`);
   }
 
   return (
@@ -59,7 +61,7 @@ export function Subscribe() {
               className="bg-gray-900 rounded px-5 h-14"
               type="text"
               onChange={event => setEmail(event.target.value)}
-              placeholder="Seu nome completo"
+              placeholder="Seu e-mail"
             />
 
             <button
