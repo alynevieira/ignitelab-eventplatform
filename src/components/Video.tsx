@@ -3,6 +3,7 @@ import { DefaultUi, Player, Youtube } from "@vime/react";
 
 import '@vime/core/themes/default.css';
 import { useGetLessonBySlugQuery } from "../graphql/generated";
+import { PulseLoader } from "react-spinners";
 
 interface VideoProps {
   lessonSlug: string;
@@ -18,7 +19,11 @@ export function Video(props: VideoProps) {
   if (!data || !data.lesson) {
     return (
       <div className="flex-1">
-        <p>Carregando...</p>
+        <div className="h-full w-full max-w-[1100px] max-h-[85vh] aspect-video">
+          <div className="flex justify-center items-center h-[100%]">
+            <PulseLoader color="#e1e1e8" speedMultiplier={.6} />
+          </div>
+        </div>
       </div>
     )
   }
@@ -26,7 +31,7 @@ export function Video(props: VideoProps) {
   return (
     <div className="flex-1">
       <div className="bg-black flex justify-center">
-        <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
+        <div className="h-full w-full max-w-[1100px] max-h-[85vh] aspect-video">
           <Player>
             <Youtube videoId={data.lesson.videoId} />
             <DefaultUi />
@@ -84,7 +89,7 @@ export function Video(props: VideoProps) {
                 Acesse o material complementar para acelerar o seu desenvolvimento
               </p>
             </div>
-            <div className="h-full p-2 md:p-6 flex items-center">
+            <div className="h-full p-2 md:p-5 flex items-center">
               <CaretRight size={24} />
             </div>
           </a>
@@ -99,7 +104,7 @@ export function Video(props: VideoProps) {
                 Baixe wallpapers exclusivos do Ignite Lab e personalize a sua máquina
               </p>
             </div>
-            <div className="h-full p-2 md:p-6 flex items-center">
+            <div className="h-full p-2 md:p-5 flex items-center">
               <CaretRight size={24} />
             </div>
           </a>
