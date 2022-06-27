@@ -1,10 +1,11 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { CheckCircle, Diamond, Lock } from 'phosphor-react';
 import { format, isPast } from 'date-fns';
 import classNames from 'classnames';
 
 import ptBR from 'date-fns/locale/pt-BR';
+import { useEffect } from 'react';
 
 interface LessonProps {
   title: string;
@@ -14,24 +15,33 @@ interface LessonProps {
 }
 
 export function Lesson(props: LessonProps) {
-  const { slug } = useParams<{ slug: string }>();
+  let { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
   
   const isLessonAvailable = isPast(props.availableAt);
-  const availableDateFormatted = format(props.availableAt, "EEEE' • 'd' de 'MMMM' • 'k'h'mm", {
-    locale: ptBR
+  const availableDateFormatted = format(props.availableAt, "EEE' • 'd' de 'MMMM' • 'k'h'mm", {
+    locale: ptBR,
   });
+  
+  useEffect(() => {
+    if(!slug && isLessonAvailable) {
+      const slugSaved = localStorage.getItem('slug')!;
+      navigate(`/event/lesson/${slugSaved}`);
+      slug = slugSaved;
+    }
+  }, []);
   
   const routeToLesson = isLessonAvailable ? `/event/lesson/${props.slug}` : '';
   const isActiveLesson = slug === props.slug;
 
   return (
     <Link to={routeToLesson} className='group'>
-      <span className="text-gray-300">
+      <span className="text-gray-300 capitalize">
         {availableDateFormatted}
       </span>
 
       <div 
-        className={classNames('rounded border border-gray-500 p-4 mt-2', {
+        className={classNames('relative rounded border border-gray-500 p-4 mt-2', {
           'bg-green-500': isActiveLesson,
           'group-hover:border-green-500': isLessonAvailable,
           'opacity-50 cursor-not-allowed': !isLessonAvailable
@@ -63,7 +73,7 @@ export function Lesson(props: LessonProps) {
         </header>
 
         { isActiveLesson 
-          ? <Diamond size={16} color="#00875F" weight="fill" className="absolute right-[19.6rem]"/> 
+          ? <Diamond size={16} color="#00875F" weight="fill" className="absolute left-[-.5rem]"/> 
           : ""}
 
         <strong className={classNames('mt-4 block',{

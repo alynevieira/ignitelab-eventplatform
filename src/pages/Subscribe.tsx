@@ -4,9 +4,11 @@ import { useState, FormEvent } from "react";
 import imageCode from '../assets/images/code-mockup.png';
 
 import { Logo } from "../components/Logo";
-import { useCreateSubscriberMutation } from "../graphql/generated";
+import { useCreateSubscriberMutation, useGetLessonsQuery } from "../graphql/generated";
 
 export function Subscribe() {
+  const { data } = useGetLessonsQuery();
+  const slug = data && data.lessons && data.lessons.length ? data.lessons[0].slug : '';
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
@@ -24,20 +26,22 @@ export function Subscribe() {
       }
     });
 
-    navigate('/event');
+    navigate(`/event/lesson/${slug}`);
   }
 
   return (
     <div className="min-h-screen bg-blur bg-cover bg-no-repeat flex flex-col items-center">
-      <div className="w-full max-w-[1100px] flex items-center justify-between mt-20 mx-auto">
-        <div className="max-w-[640px]">
-          <Logo />
+      <div className="w-full max-w-[1100px] flex flex-col md:flex-row items-center justify-between mt-20 mx-auto">
+        <div className="max-w-[640px] px-8 mb-8 text-center md:text-left md:px-0 md:mb-0">
+          <div className="flex items-center justify-center md:justify-start">
+            <Logo />
+          </div>
 
-          <h1 className="mt-8 text-[2.5rem] leading-tight">
+          <h1 className="mt-8 text-3xl md:text-[2.5rem] leading-tight">
             Construa uma <strong className="text-blue-500">aplicação completa</strong>, do zero,
             com <strong className="text-blue-500">React JS</strong>
           </h1>
-          <p className="mt-4 text-gray-200 leading-relaxed">
+          <p className="mt-4 text-sm md:text-base text-gray-200 leading-relaxed">
             Em apenas uma semana você vai dominar na prática uma das tecnologias mais utilizadas e com alta demanda para acessar as melhores oportunidades do mercado.
           </p>
         </div>
@@ -57,7 +61,7 @@ export function Subscribe() {
               className="bg-gray-900 rounded px-5 h-14"
               type="text"
               onChange={event => setEmail(event.target.value)}
-              placeholder="Seu nome completo"
+              placeholder="Seu e-mail"
             />
 
             <button
